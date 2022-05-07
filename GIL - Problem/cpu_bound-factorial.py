@@ -20,14 +20,20 @@ def calculate_factorial_using_threads(threads):
         t.join()
 
 if __name__ == "__main__":
-    number = 200000
+    number = 200000 
     number_of_threads = int(sys.argv[1])
     threads = []
     
     for _ in range(number_of_threads):
         threads.append(Thread(target=calculate_factorial, args=(number,)))
         
+    print(f'Factorial on {number_of_threads} threads : ')
     print(f'{timeit.timeit("calculate_factorial_using_threads(threads)", "from __main__ import calculate_factorial_using_threads, threads", number=1)}')
+
+
+    print(f'Factorial on {number_of_threads} threads Serially :')
+    print(f'{timeit.timeit("calculate_factorial(number)", "from __main__ import calculate_factorial, number", number=number_of_threads)}')
+
 
     '''
     /usr/bin/python3 factorial.py 1
