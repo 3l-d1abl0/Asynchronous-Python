@@ -15,7 +15,6 @@ def file_search(path, file_name):
             matches.append(file_name)
 
         if isdir(full_path):
-            print("Recu")
             file_search(full_path, file_name)
 
 
