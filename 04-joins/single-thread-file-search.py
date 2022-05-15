@@ -12,7 +12,7 @@ def file_search(path, file_name):
         full_path = join(path, file)
 
         if file_name in file:
-            matches.append(file_name)
+            matches.append(full_path)
 
         if isdir(full_path):
             file_search(full_path, file_name)
