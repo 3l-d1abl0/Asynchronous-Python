@@ -1,49 +1,44 @@
 import time
-from multiprocessing import Process, Lock
-
-money = 1000
-mutex = Lock()
+from threading import Thread, Condition
 
 
 class AddSubrtract:
 
+    def __init__(self):
+        self.cv = Condition()
+        self.money = 1000
+
     def addNumber(self):
 
         for i in range(1000000):
-            mutex.acquire()
-            global money
-            money += 10
-            mutex.release()
-            print("+100")
+            self.cv.acquire()
+            self.money += 10
+            self.cv.notify()
+            self.cv.release()
 
-        print("Done : addNumber")
 
 
     def subtractNumber(self):
 
         for _ in range(1000000):
-            mutex.acquire()
-            global money
-            money -= 20
-            if money <0:
-                print(f"Money in the Bank {money}")
-            mutex.release()
-            print("-------------")
+            self.cv.acquire()
+            while self.money < 10:
+                self.cv.wait()
+            self.money -= 10
 
-        print("Done : subtractNumber")
+            if self.money  <=0:
+                print(f"Money in the Bank {self.money}")
+
+            self.cv.release()
+            
 
 
 if __name__ == "__main__":
 
     obj = AddSubrtract()
-    
-    start = time.time()
 
-    Process(target=obj.addNumber, args=()).start()
-    Process(target=obj.subtractNumber, args=()).start()
+    Thread(target=obj.addNumber, args=()).start()
+    Thread(target=obj.subtractNumber, args=()).start()
 
-    end = time.time()
-
-    time.sleep(10)
-    print(f"Money : {money}")
-    print(f"Time Taken : {start-end}")
+    time.sleep(50)
+    print(f"Money : {obj.money}")
