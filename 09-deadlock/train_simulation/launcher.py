@@ -1,6 +1,7 @@
 from threading import Lock, Thread
 
-from deadlock.train import *
+#from deadlock.train import *
+from arbitrator.train import *
 from draw_trains import *
 from model import *
 
