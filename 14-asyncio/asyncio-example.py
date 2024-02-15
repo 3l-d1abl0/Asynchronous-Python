@@ -4,11 +4,14 @@ import time
 import aiohttp
 
 async def download_site(session, url):
+
+    print(loop.time())
     async with session.get(url) as response:
         #print(response.request_info)
         #print(dir(response))
         indicator = "J" if "jython" in url else "R"
-        print(indicator, sep='', end='', flush=True)
+        print(indicator, sep='', end='\n', flush=True)
+    print(loop.time())
 
 
 

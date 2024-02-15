@@ -15,8 +15,9 @@ async def counting():
     for i in range(5):
         print('counting', i)
         await asyncio.sleep(1)
-
+ 
 async def main():
     await asyncio.gather(client_demo(), counting())
+    print('End of Main !')
 
 asyncio.run(main())
